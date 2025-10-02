@@ -1,0 +1,75 @@
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+.btn-view-seats {
+  background-color: #dc2626;
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.btn-view-seats:hover {
+  background-color: #b91c1c;
+}
+
+input[type="range"] {
+  width: 100%;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+  appearance: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #10b981; /* Green checkmark background */
+  border-color: #10b981;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✓'; /* Checkmark symbol */
+  color: white;
+  font-size: 0.9rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.seat-layout button {
+  transition: background-color 0.2s ease;
+}
+
+.seat-layout button:hover:not(:disabled) {
+  background-color: #d1d5db;
+}
+
+.seat-layout button:disabled {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .btn-view-seats {
+    width: 100%;
+    text-align: center;
+  }
+  .seat-layout {
+    padding: 1rem;
+  }
+  .seat-layout .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
