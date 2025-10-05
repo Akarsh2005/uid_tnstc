@@ -1,0 +1,153 @@
+.profile-container {
+  min-height: 100vh;
+  background-color: #e6f0fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.profile-content {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.profile-home-button {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.profile-home-button:hover {
+  background-color: #1e40af;
+}
+
+.profile-section-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #374151;
+  margin-bottom: 16px;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-info p {
+  font-size: 1rem;
+  color: #374151;
+}
+
+.profile-info p strong {
+  color: #1e3a8a;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-label {
+  font-size: 1rem;
+  font-weight: medium;
+  color: #374151;
+}
+
+.profile-input {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.profile-input.error {
+  border-color: #ef4444;
+}
+
+.profile-error {
+  color: #ef4444;
+  font-size: 0.875rem;
+}
+
+.profile-text {
+  font-size: 1rem;
+  color: #374151;
+  margin: 0;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.profile-edit-button,
+.profile-save-button {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.profile-edit-button:hover,
+.profile-save-button:hover {
+  background-color: #1e40af;
+}
+
+.profile-cancel-button {
+  background-color: #6b7280;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.profile-cancel-button:hover {
+  background-color: #4b5563;
+}
+
+.profile-message {
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+}
+
+.profile-message.success {
+  background-color: #d1fae5;
+  color: #065f46;
+}

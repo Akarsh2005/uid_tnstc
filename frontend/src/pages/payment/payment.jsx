@@ -122,9 +122,7 @@ const PaymentPage = () => {
 
   return (
     <div className="payment-container">
-      <div className="payment-demo-banner">
-        This is a demo. No real payment is processed. Bookings are saved locally.
-      </div>
+      
       <div className="payment-content">
         <div className="payment-summary">
           <h2 className="payment-summary-title">{bookingType}</h2>

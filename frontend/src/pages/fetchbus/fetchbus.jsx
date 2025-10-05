@@ -66,26 +66,25 @@ const FetchBus = () => {
 
   const handleFilterChange = (filterType, value) => {
     if (filterType === 'departureTimeRange') {
-      const num = parseInt(value) || 2359;
-      if (num < 0 || num > 2359) {
+      const [hours, minutes] = value.split(':').map(Number);
+      const numMinutes = hours * 60 + minutes;
+      if (numMinutes < 0 || numMinutes > 1439) { // 23:59 in minutes
         setTimeError('Time must be between 00:00 and 23:59');
         return;
       }
       setTimeError('');
+      // Convert back to 4-digit format for consistency with original range
+      const formattedValue = `${hours.toString().padStart(2, '0')}${minutes.toString().padStart(2, '0')}`;
+      setFilters((prev) => ({ ...prev, [filterType]: [0, parseInt(formattedValue) || 2359] }));
+    } else if (filterType === 'priceRange') {
+      return { ...prev, [filterType]: [100, parseInt(value) || 1000] };
+    } else if (filterType === 'busTypes') {
+      const newTypes = prev.busTypes.includes(value)
+        ? prev.busTypes.filter((t) => t !== value)
+        : [...prev.busTypes, value];
+      return { ...prev, [filterType]: newTypes };
     }
-    setFilters((prev) => {
-      if (filterType === 'priceRange') {
-        return { ...prev, [filterType]: [100, parseInt(value) || 1000] };
-      } else if (filterType === 'departureTimeRange') {
-        return { ...prev, [filterType]: [0, parseInt(value) || 2359] };
-      } else if (filterType === 'busTypes') {
-        const newTypes = prev.busTypes.includes(value)
-          ? prev.busTypes.filter((t) => t !== value)
-          : [...prev.busTypes, value];
-        return { ...prev, [filterType]: newTypes };
-      }
-      return prev;
-    });
+    return prev;
   };
 
   const handleViewSeats = (bus) => {
@@ -151,7 +150,8 @@ const FetchBus = () => {
                 max="1000"
                 value={filters.priceRange[1]}
                 onChange={(e) => handleFilterChange('priceRange', e.target.value)}
-                className="w-full"
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                style={{ background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((filters.priceRange[1] - 100) / 900) * 100}%, #e5e7eb ${((filters.priceRange[1] - 100) / 900) * 100}%, #e5e7eb 100%)` }}
                 aria-label="Adjust maximum price"
               />
               <p className="text-sm text-gray-600">Max: Rs {filters.priceRange[1]}</p>
@@ -162,13 +162,10 @@ const FetchBus = () => {
               </label>
               <input
                 id="departure-time"
-                type="number"
-                min="0"
-                max="2359"
-                value={filters.departureTimeRange[1]}
+                type="time"
+                value={formatTime(filters.departureTimeRange[1])}
                 onChange={(e) => handleFilterChange('departureTimeRange', e.target.value)}
-                placeholder="e.g., 2359"
-                className="w-full px-2 py-1 border rounded focus:border-blue-500 focus:ring focus:ring-blue-200"
+                className="w-full px-2 py-1 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 bg-white"
                 aria-label="Adjust maximum departure time"
               />
               {timeError && <p className="text-sm text-red-500 mt-1">{timeError}</p>}
@@ -176,13 +173,13 @@ const FetchBus = () => {
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">Bus Types</label>
               {uniqueBusTypes.map((type) => (
-                <label key={type} className="flex items-center space-x-2">
+                <label key={type} className="bus-type-label flex items-center mb-2">
                   <input
                     type="checkbox"
                     value={type}
                     checked={filters.busTypes.includes(type)}
                     onChange={() => handleFilterChange('busTypes', type)}
-                    className="rounded focus:ring-blue-500"
+                    className="bus-type-checkbox mr-2"
                     aria-label={`Filter by bus type ${type}`}
                   />
                   <span className="text-sm">{type}</span>
@@ -191,14 +188,14 @@ const FetchBus = () => {
             </div>
             <button
               onClick={() => setFilters({ priceRange: [100, 1000], departureTimeRange: [0, 2359], busTypes: [] })}
-              className="w-full py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+              className="w-full py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 mb-2"
               aria-label="Clear all filters"
             >
               Clear Filters
             </button>
             <button
               onClick={() => navigate('/home')}
-              className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mt-2"
+              className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               aria-label="Modify search criteria"
             >
               Modify Search
@@ -248,6 +245,13 @@ const FetchBus = () => {
       )}
     </div>
   );
+};
+
+// Helper function to format minutes to HH:MM for time input
+const formatTime = (minutes) => {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
 };
 
 export default FetchBus;
